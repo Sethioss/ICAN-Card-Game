@@ -3,50 +3,49 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Templates/SubclassOf.h"
 #include "CardCollection.h"
-#include "Hand.h"
-#include "Deck.generated.h"
+#include "PlayedCardMat.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class ICAN_CARD_GAME_API ADeck : public ACardCollection
+class ICAN_CARD_GAME_API APlayedCardMat : public ACardCollection
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ADeck();
+
+public:
+
+	APlayedCardMat();
 
 	UPROPERTY(EditAnywhere)
-	class AHand* Hand = nullptr;
+	class UCardSlotComponent* CardSlotComp = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	class ADiscardedDeck* DiscardedDeck = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	class UStaticMeshComponent* StaticMeshComponent = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<class ACard>> PossibleCardsList;
-
-	UFUNCTION()
-	void FillDeck();
+	bool bFilled = false;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	TArray<ACard*> SpawnedCardsList;
-
 	//*--- ACardCollectionInterface
 	virtual bool AddCard(class ACard* Card) override;
+	virtual bool SetCard(ACard* Card, const int Index) override;
 	virtual bool RemoveCard(class ACard* Card) override;
 	virtual void UpdateCollectionVisuals() override;
+	virtual void InitCollection() override;
 	//*--- End of ACardCollectionInterface
+
+	UFUNCTION(BlueprintCallable)
+	void GetSlotComps();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsMatFilled();
+
+	TArray<class UCardSlotComponent*> SlotComps;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
 };

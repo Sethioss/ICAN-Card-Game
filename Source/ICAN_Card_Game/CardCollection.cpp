@@ -18,6 +18,12 @@ void ACardCollection::BeginPlay()
 	
 }
 
+void ACardCollection::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	Cards.Reset();
+}
+
 // Called every frame
 void ACardCollection::Tick(float DeltaTime)
 {
@@ -25,9 +31,31 @@ void ACardCollection::Tick(float DeltaTime)
 
 }
 
+void ACardCollection::InitCollection()
+{
+	//Cards.Empty();
+	Cards.AddDefaulted(MaxCapacity);
+}
+
 bool ACardCollection::AddCard(ACard* Card)
 {
+	Card->bIsCardSet = true;
 	return true;
+}
+
+bool ACardCollection::SetCard(ACard* Card, const int Index)
+{
+	if(Index < MaxCapacity)
+	{
+		if(Card != nullptr)
+		{
+			Cards[Index] = Card;
+			Cards[Index]->bIsCardSet = true;
+		}
+		return true;
+	}
+	
+	return false;
 }
 
 bool ACardCollection::RemoveCard(ACard* Card)

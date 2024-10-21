@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
 
+	bool bIsCardSelected = false;
+	bool bIsCardSet = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
