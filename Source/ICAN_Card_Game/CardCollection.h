@@ -26,7 +26,13 @@ public:
 	bool bInfiniteCapacity = false;
 
 	UFUNCTION(BlueprintCallable)
+	virtual void InitCollection();
+
+	UFUNCTION(BlueprintCallable)
 	virtual bool AddCard(ACard* Card);
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool SetCard(ACard* Card, const int Index);
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool RemoveCard(ACard* Card);
@@ -40,6 +46,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	// Called every frame
