@@ -12,7 +12,7 @@ enum class ECardStatus : uint8 {
 	IN_DECK = 0 UMETA(DisplayName = "DECK"),
 	IN_HAND = 1  UMETA(DisplayName = "HAND"),
 	IN_DISCARD = 2     UMETA(DisplayName = "DISCARD"),
-	PLAYED = 3     UMETA(DisplayName = "PLAYED")
+	IN_SLOT = 3     UMETA(DisplayName = "IN_SLOT")
 };
 
 UCLASS()

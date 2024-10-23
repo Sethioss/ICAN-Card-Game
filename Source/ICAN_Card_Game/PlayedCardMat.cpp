@@ -28,7 +28,7 @@ bool APlayedCardMat::AddCard(class ACard* Card)
 	if (Card && Cards.Num() < MaxCapacity)
 	{
 		Cards.Insert(Card, 0);
-		Card->Status = ECardStatus::PLAYED;
+		Card->Status = ECardStatus::IN_SLOT;
 		Cards[0]->bIsCardSet = true;
 		return true;
 	}
@@ -57,7 +57,7 @@ bool APlayedCardMat::SetCard(ACard* Card, const int Index)
 			Cards[Index]->bIsCardSet = true;
 		}
 
-		if(IsMatFilled())
+		if(IsCollectionFull())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
 		}
@@ -69,7 +69,6 @@ bool APlayedCardMat::SetCard(ACard* Card, const int Index)
 
 void APlayedCardMat::UpdateCollectionVisuals()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Updating visuals on PlayedCardMat!"));
 	GetSlotComps();
 
 	checkf(SlotComps.Num() <= Cards.Num(), TEXT("The number of cards is over the MaxCapacity"));
@@ -88,6 +87,19 @@ void APlayedCardMat::UpdateCollectionVisuals()
 void APlayedCardMat::InitCollection()
 {
 	Super::InitCollection();
+}
+
+bool APlayedCardMat::IsCollectionFull()
+{
+	bool bIsFull = true;
+	for(int i = 0; i < MaxCapacity; i++)
+	{
+		if(!Cards[i])
+		{
+			bIsFull = false;
+		}
+	}
+	return bIsFull;
 }
 
 void APlayedCardMat::GetSlotComps()

@@ -4,6 +4,7 @@
 #include "CardSlotComponent.h"
 #include "CardCollection.h"
 #include "CardCollectionsManager.h"
+#include "PlayedCardMat.h"
 
 UCardSlotComponent::UCardSlotComponent()
 {
@@ -27,17 +28,41 @@ void UCardSlotComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-bool UCardSlotComponent::Interact(ACard* Card) const
+bool UCardSlotComponent::Interact(ACard*& Card) const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Interacting with slot %i!"), ID);
 	ACardCollection* OwnerCollection = Cast<ACardCollection>(GetOwner());
 
 	if(OwnerCollection)
 	{
-		const bool bTransferSucceeded = CollectionManager->MoveBetweenCollections(CollectionManager->Hand, OwnerCollection, Card, ID);
-		OwnerCollection->UpdateCollectionVisuals();
-		CollectionManager->DeselectHand();
+		bool bTransferSucceeded = false;
+		
+		//We swap with card with hand
+		checkf(Cast<APlayedCardMat>(OwnerCollection), TEXT("Collection is expected to be a played card mat"))
+		if(OwnerCollection->Cards[ID])
+		{
+			//TODO: These assignations are hard coded, we should probably find a smarter way to assure it's a hand->slot situation
+			OwnerCollection->Cards[ID]->Status = ECardStatus::IN_HAND;
+			Card->Status = ECardStatus::IN_SLOT;
 
+			bTransferSucceeded = CollectionManager->SwapCard(OwnerCollection->Cards[ID], CollectionManager->Hand->Cards[CollectionManager->Hand->Cards.IndexOfByKey(Card)]);
+			CollectionManager->Hand->UpdateCollectionVisuals();
+			OwnerCollection->UpdateCollectionVisuals();
+			CollectionManager->DeselectHand();
+
+			if(OwnerCollection->IsCollectionFull())
+			{
+				UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
+			}
+			
+		}
+		//We transfer card in hand
+		else
+		{
+			Card->Status = ECardStatus::IN_SLOT;
+			bTransferSucceeded = CollectionManager->MoveBetweenCollections(CollectionManager->Hand, OwnerCollection, Card, ID);
+			CollectionManager->DeselectHand();
+			OwnerCollection->UpdateCollectionVisuals();
+		}
 		return bTransferSucceeded;
 		
 	}

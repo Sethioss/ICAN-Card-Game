@@ -85,9 +85,6 @@ void ACardPlayer::OnClick()
 			{
 				CollectionManager->DeselectHand();
 				CollectionManager->SelectCard(Card);
-				UE_LOG(LogTemp, Warning, TEXT("Selected card %s"), *Card->CardDataComp->Name);
-				//Card->PlayCard();
-				//CollectionManager->MoveBetweenCollections(CollectionManager->Hand, CollectionManager->DiscardedDeck, Card);
 			}
 		}
 

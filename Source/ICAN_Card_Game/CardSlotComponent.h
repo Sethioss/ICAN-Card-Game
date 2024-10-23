@@ -24,11 +24,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
 	class UCardCollectionsManager* CollectionManager = nullptr;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	bool Interact(class ACard* Card) const;
+	bool Interact(class ACard*& Card) const;
 };

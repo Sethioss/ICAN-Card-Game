@@ -12,10 +12,10 @@ class ICAN_CARD_GAME_API ACardCollection : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	// Sets default values for this actor's properties
 	ACardCollection();
-
+	
 	UPROPERTY(EditAnywhere)
 	TArray<ACard*> Cards;
 
@@ -42,6 +42,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool Shuffle();
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool IsCollectionFull();
 
 protected:
 	// Called when the game starts or when spawned

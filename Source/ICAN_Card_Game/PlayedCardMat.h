@@ -28,14 +28,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//*--- ACardCollectionInterface
-	virtual bool AddCard(class ACard* Card) override;
-	virtual bool SetCard(ACard* Card, const int Index) override;
-	virtual bool RemoveCard(class ACard* Card) override;
-	virtual void UpdateCollectionVisuals() override;
-	virtual void InitCollection() override;
-	//*--- End of ACardCollectionInterface
-
 	UFUNCTION(BlueprintCallable)
 	void GetSlotComps();
 
@@ -47,5 +39,14 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	//*--- ACardCollectionInterface
+	virtual bool AddCard(class ACard* Card) override;
+	virtual bool SetCard(ACard* Card, const int Index) override;
+	virtual bool RemoveCard(class ACard* Card) override;
+	virtual void UpdateCollectionVisuals() override;
+	virtual void InitCollection() override;
+	virtual bool IsCollectionFull() override;
+	//*--- End of ACardCollectionInterface
 	
 };
