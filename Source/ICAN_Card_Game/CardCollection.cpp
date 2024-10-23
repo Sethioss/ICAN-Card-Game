@@ -33,7 +33,6 @@ void ACardCollection::Tick(float DeltaTime)
 
 void ACardCollection::InitCollection()
 {
-	//Cards.Empty();
 	Cards.AddDefaulted(MaxCapacity);
 }
 
@@ -66,6 +65,11 @@ bool ACardCollection::RemoveCard(ACard* Card)
 bool ACardCollection::Shuffle()
 {
 	return true;
+}
+
+bool ACardCollection::IsCollectionFull()
+{
+	return Cards.Num() == MaxCapacity;
 }
 
 void ACardCollection::UpdateCollectionVisuals()

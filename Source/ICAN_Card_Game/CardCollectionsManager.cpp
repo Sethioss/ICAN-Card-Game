@@ -20,12 +20,13 @@ UCardCollectionsManager* UCardCollectionsManager::GetInstance()
 	return Instance;
 }
 
-void UCardCollectionsManager::DeselectHand() const
+void UCardCollectionsManager::DeselectHand()
 {
 	for(int i = 0; i < Hand->Cards.Num(); ++i)
 	{
 		Hand->Cards[i]->bIsCardSelected = false;
 	}
+	SelectedCard = nullptr;
 }
 
 void UCardCollectionsManager::SelectCard(ACard* Card)
@@ -83,5 +84,17 @@ bool UCardCollectionsManager::MoveBetweenCollections(ACardCollection* A, ACardCo
 		B->UpdateCollectionVisuals();
 	}
 	return Result;
+}
+
+bool UCardCollectionsManager::SwapCard(ACard*& CardA, ACard*& CardB)
+{
+	if(CardA && CardB)
+	{
+		CardA->bIsCardSet = false;
+		CardB->bIsCardSet = true;
+		::Swap(CardA, CardB);
+		return true;
+	}
+	return false;
 }
 

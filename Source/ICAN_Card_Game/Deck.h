@@ -39,13 +39,13 @@ protected:
 
 	TArray<ACard*> SpawnedCardsList;
 
+public:	
 	//*--- ACardCollectionInterface
 	virtual bool AddCard(class ACard* Card) override;
 	virtual bool RemoveCard(class ACard* Card) override;
 	virtual void UpdateCollectionVisuals() override;
 	//*--- End of ACardCollectionInterface
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

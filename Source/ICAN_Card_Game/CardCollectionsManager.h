@@ -15,7 +15,7 @@ class ICAN_CARD_GAME_API UCardCollectionsManager : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UCardCollectionsManager();
 
@@ -42,10 +42,12 @@ public:
 
 	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card, const int IndexToMoveAt = -1);
 
+	static bool SwapCard(class ACard*& CardA, class ACard*& CardB);
+
 	UFUNCTION(BlueprintCallable, Category = "CardCollections singleton")
 	static UCardCollectionsManager* GetInstance();
 
-	void DeselectHand() const;
+	void DeselectHand();
 	void SelectCard(ACard* Card);
 
 	UPROPERTY()
