@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "Engine/TextRenderActor.h"
 #include "ScoreCalculator.generated.h"
 
 USTRUCT()
@@ -14,10 +15,10 @@ struct FRuleStruct
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UScoreRule> Rule;
 	UPROPERTY(EditAnywhere)
-	bool bDefiniteValue = false;
-	UPROPERTY(EditAnywhere, meta = (EditCondition="bDefiniteValue==true", EditConditionHides))
+	bool bIsDefiniteValue = false;
+	UPROPERTY(EditAnywhere, meta = (EditCondition="bIsDefiniteValue==true", EditConditionHides))
 	float DefiniteValue = 0;
-	UPROPERTY(EditAnywhere, meta = (EditCondition="bDefiniteValue==false", EditConditionHides))
+	UPROPERTY(EditAnywhere, meta = (EditCondition="bIsDefiniteValue==false", EditConditionHides))
 	TSubclassOf<class UScoreBonus> Bonus;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UScoreBonusOperand> Operand;
@@ -37,6 +38,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TArray<FRuleStruct> MyRules;
+
+	UPROPERTY(EditAnywhere)
+	ATextRenderActor* TextActor = nullptr;
 	
 	//UPROPERTY(EditAnywhere)
 	//TArray<TSubclassOf<class UScoreRule>> Rules;
@@ -47,6 +51,8 @@ protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 	static UScoreCalculator* Instance;
+
+	void AddToTextActor(FString TextToAdd);
 
 public:	
 	// Called every frame
