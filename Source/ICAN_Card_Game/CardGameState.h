@@ -15,11 +15,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FString Name;
 
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
+	bool bActiveState = false;
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StartDelegate();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void TickDelegate();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void EndDelegate();
+
+	virtual void Tick(float DetaTime) override;
 
 };
