@@ -31,7 +31,7 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 	
 	for(int i = 0; i < PlayedCards.Num(); i++)
 	{
-		if (PlayedCards[i]->CardID >= 0)
+		if (PlayedCards[i] && PlayedCards[i]->CardID >= 0)
 		{
 			Score += PlayedCards[i]->GetCardDataComp()->Value;
 		}
