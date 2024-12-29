@@ -29,6 +29,8 @@ AEnemy::AEnemy()
 	TextComponentName->SetWorldLocation(FVector(0, 0, 300));
 	TextComponentName->SetText(FText::FromString("Name"));
 
+	SetReplicates(true);
+
 }
 
 // Called when the game starts or when spawned
